@@ -1,6 +1,6 @@
 <template>
 	<div id="app">
-		<div 
+		<main 
 			:class="{'poke-classic': classic}"
 			class="container"
 		>
@@ -9,7 +9,10 @@
 					v-if="!isPlaying && !isDone" 
 					class="poke-section"
 				>
-					<h2>What type of trainer are you?</h2>
+					<h1 
+						aria-live="polite"
+						class="h2"
+					>What type of trainer are you?</h1>
 					<div class="poke-intro-trainer">
 						<div class="poke-ball"></div>
 						<img 
@@ -49,18 +52,25 @@
 					v-if="isPlaying"
 					class="poke-section"
 				>
-					<h1 class="poke-title">
+					<h1 
+						aria-live="polite"
+						class="poke-title"
+					>
 						Who's that pokemon?
 					</h1>
 					<div class="poke-question-wrapper">
-						<span class="poke-question">
-							<span class="poke-question-number">
-								{{ question }} 
+						<h2 class="poke-question">
+							<span 
+								aria-live="polite"
+								class="poke-question-number"
+							>
+								<span class="sr-only">Question:</span>
+								{{ question }}
 							</span>
 							<span class="poke-question-amount">
 								/ {{ questionAmount}}
 							</span>
-						</span>
+						</h2>
 						<span class="poke-score">
 							{{ score }}
 							<small>pts</small>
@@ -81,14 +91,25 @@
 							:class="{'poke-options-answers': isChecked}"
 							class="poke-options"
 						>
-							<button 
+							<div 
 								v-for="(pokemon, index) in options"
 								:key="pokemon.name"
 								:data-index="index"
-								:class="{ 'selected': selected.index === index, 'success': isChecked && pokemon.name === answer.name , 'error': isChecked && selected.index === index && selected.name !== answer.name }"
+								:class="{ 'selected': selected.index === index, 'success': isChecked && pokemon.name === answer.name, 'error': isChecked && selected.index === index && selected.name !== answer.name }"
 								class="poke-options-button"
 								@click="selectAnswer(pokemon.name, index)"
-							>{{ pokemon.name | prettifyName }}</button>
+							>
+								<input 
+									:id="pokemon.name"
+									:value="pokemon.name"
+									class="poke-options-control"
+									name="poke"
+									type="radio"
+								>
+								<label :for="pokemon.name">
+									{{ pokemon.name | prettifyName }}
+								</label>
+							</div>
 						</transition-group>
 						<footer class="poke-buttons">
 							<button
@@ -96,6 +117,17 @@
 								class="button"
 								@click="checkAnswer"
 							>Submit</button>
+							<span 
+								v-if="isChecked" class="sr-only"
+								aria-live="polite"
+							>
+								<span v-if="selected.name === answer.name">
+									Correct!
+								</span>
+								<span v-else>
+									Incorrect, the correct answer was {{ answer.name }}.
+								</span>
+							</span>
 							<button 
 								:disabled="!isChecked"
 								class="button"
@@ -111,7 +143,10 @@
 					v-if="isDone"
 					class="poke-final"
 				>
-					<h2>Final score</h2>
+					<h1 
+						aria-live="polite"
+						class="h2"
+					>Final score</h1>
 					<span class="poke-final-score">
 						<span class="poke-final-score-number">{{ score }}</span>
 						pts
@@ -122,7 +157,7 @@
 					>Play again</button>
 				</section>
 			</transition>
-		</div>
+		</main>
 	</div>
 </template>
 
@@ -227,6 +262,7 @@ export default {
 			this.getNextQuestion();
 		},
 		getNextQuestion() {
+			document.body.focus();
 			this.question += 1;
 			this.resetAnswer();
 			

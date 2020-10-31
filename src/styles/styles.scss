@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=VT323');
-$black: #333;
+$black: #282828;
 $white: #fff;
 
 $primary-color: #f65a52;
@@ -29,6 +29,15 @@ body {
 	color: $black;
 }
 
+:focus {
+	outline: none;
+}
+
+:focus-visible {
+	outline: 1px dotted lighten($primary-color, 15%);
+	outline-offset: 1px;
+}
+
 .container {
 	width: 100%;
 	max-width: 400px;
@@ -36,7 +45,7 @@ body {
 	margin: 50px auto;
 }
 
-h2 {
+.h2 {
 	font-size: 1.25rem;
 	white-space: nowrap;
 }
@@ -54,12 +63,7 @@ h2 {
 	background-color: $primary-color-dark;
 	color: $black;
 	cursor: pointer;
-	transition: 0.35s;
-		
-	&:focus {
-		outline: none;
-		border: 1px dotted lighten($primary-color, 8%);
-	}
+	transition: background-color 0.35s, color 0.35s;
 	
 	&:not([disabled]) {
 		&:hover {
@@ -315,8 +319,16 @@ h2 {
 			}
 		}
 	}
+
+	&-control {
+		position: absolute;
+		opacity: 0;
+	}
 	
 	&-button {
+		display: flex;
+		align-items: center;
+		justify-content: center;
 		position: relative;
 		width: 100%;
 		padding: 0.5em;
@@ -330,10 +342,6 @@ h2 {
 		transition: 0.45s;
 		cursor: pointer;
 		overflow: hidden;
-		
-		&:focus {
-			outline: none;
-		}
 		
 		&::before {
 			content: '';
@@ -351,6 +359,11 @@ h2 {
 		
 		&:not(:last-child) {
 			margin-bottom: $border-width / 2;
+		}
+
+		&:focus-within {
+			outline: 1px dotted lighten($primary-color, 15%);
+			outline-offset: 1px;
 		}
 
 		&.selected {
@@ -525,6 +538,18 @@ h2 {
 	&-leave-to {
 		opacity: 0;
 	}
+}
+
+.sr-only {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0,0,0,0);
+	white-space: nowrap;
+	border: 0;
 }
 
 @keyframes grow {
