@@ -13,16 +13,16 @@
 					<div class="poke-intro-trainer">
 						<div class="poke-ball"></div>
 						<img 
-							:class="{active: trainerHovered === 'classic'}"
+							:class="{ active: trainerHovered === 'classic' }"
 							class="poke-trainer-img poke-trainer-img-classic"
-							src="https://raw.githubusercontent.com/tiffachoo/pokesprites/master/trainers/red-rb.png" 
-							alt="Trainer red"
+							src="@/assets/trainers/red-rb.png" 
+							alt="Trainer red from red and blue"
 						>
 						<img 
-							:class="{active: trainerHovered === 'master'}"
+							:class="{ active: trainerHovered === 'master' }"
 							class="poke-trainer-img poke-trainer-img-master"
-							src="https://raw.githubusercontent.com/tiffachoo/pokesprites/master/trainers/red-sm.png" 
-							alt="Trainer red again"
+							src="@/assets/trainers/red-sm.png" 
+							alt="Trainer red from sun and moon"
 						>
 					</div>
 					<button 
@@ -67,7 +67,7 @@
 						</span>
 						<div 
 							class="poke-image"
-							:class="{'poke-image-success': isChecked && selected.name === answer.name, 'poke-image-error': isChecked && selected.name !== answer.name}"
+							:class="{ 'poke-image-success': isChecked && selected.name === answer.name, 'poke-image-error': isChecked && selected.name !== answer.name }"
 						>
 							<img 
 								:src="image" 
@@ -85,7 +85,7 @@
 								v-for="(pokemon, index) in options"
 								:key="pokemon.name"
 								:data-index="index"
-								:class="{'selected': selected.index === index, 'success': isChecked && pokemon.name === answer.name , 'error': isChecked && selected.index === index && selected.name !== answer.name}"
+								:class="{ 'selected': selected.index === index, 'success': isChecked && pokemon.name === answer.name , 'error': isChecked && selected.index === index && selected.name !== answer.name }"
 								class="poke-options-button"
 								@click="selectAnswer(pokemon.name, index)"
 							>{{ pokemon.name | prettifyName }}</button>
@@ -161,7 +161,7 @@ const prettyNames = {
 	'tapu-lele': 'tapu lele',
 	'tapu-bulu': 'tapu bulu',
 	'tapu-fini': 'tapu fini'
-}
+};
 
 export default {
 	name: 'App',
@@ -188,24 +188,24 @@ export default {
 	},
 	computed: {
 		image() {
-			let url = 'https://raw.githubusercontent.com/tiffachoo/pokesprites/master/pokemon/'
-			let imageUrl = `${url}${this.classic ? 'redblue' : 'sunmoon'}/`
-			let number = this.answer.url.match(/\/(\d+)/)[1];
-			return `${imageUrl}${number}.png`
+			const url = './assets/pokemon/';
+			const imageUrl = `${url}${this.classic ? 'redblue' : 'sunmoon'}/`
+			const number = this.answer.url.match(/\/(\d+)/)[1];
+			return require(`${imageUrl}${number}.png`);
 		},
 		classic() {
-			return this.pkmnAmount <= 151
+			return this.pkmnAmount <= 151;
 		}
 	},
 	mounted() {
-		let pokeList = localStorage.getItem('pokeList');
+		const pokeList = localStorage.getItem('pokeList');
 		
 		if (pokeList) {
 			pokemonData = JSON.parse(pokeList);
 		} else {
 			this.getData()
 				.then(res => {
-					pokemonData = res.results
+					pokemonData = res.results;
 					localStorage.setItem('pokeList', JSON.stringify(res.results));
 			});
 		}
@@ -241,7 +241,7 @@ export default {
 					}
 				}
 
-				let pos = Math.floor(Math.random() * optionAmount);
+				const pos = Math.floor(Math.random() * optionAmount);
 				this.options.splice(pos, 0, this.answer);
 			} else {
 				this.isPlaying = false;
@@ -283,5 +283,6 @@ export default {
 </script>
 
 <style lang="scss">
+@import '@/styles/reset';
 @import '@/styles/styles';
 </style>
