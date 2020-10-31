@@ -1,24 +1,22 @@
-# whos-that-pokemon
+# Who's that Pokemon?
 
-## Project setup
+> A Pokemon guessing game.
+
+⚡️ [View Codepen](https://codepen.io/tiffachoo/pen/KGJEba)
+
+### Starring
+* Vue.js
+* Sass
+* PokeAPI
+
+---
+
+#### Setup
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+#### Development
 ```
 npm run serve
 ```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
